@@ -3,12 +3,11 @@ import { connect } from 'react-redux'
 import NavigationBar from './NavigationBar'
 import Tabs from './Tabs'
 import Question from './Question'
-import { handleInitialQuestions } from '../actions/shared'
 
 class Dashboard extends Component {
 
     componentDidMount () {
-        const { answeredQuestions, unansweredQuestions, loadingBar } = this.props
+        const { answeredQuestions, unansweredQuestions } = this.props
         console.log('unansweredQuestions: ', unansweredQuestions)
         console.log('answeredQuestions: ', answeredQuestions)        
         

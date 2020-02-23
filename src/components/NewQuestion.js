@@ -37,7 +37,7 @@ class NewQuestion extends Component {
 
     render() {
 
-        const { text, toHome } = this.state
+        const { toHome } = this.state
         
         if ( toHome ) {
             return <Redirect to='/'/>        
