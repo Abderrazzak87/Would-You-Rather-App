@@ -17,12 +17,12 @@ git clone https://github.com/Abderrazzak87/Would-You-Rather-App.git
 2. Change directory to ```Would-You-Rather-App``` folder and install all requisite npm packages :
 ```
 cd Would-You-Rather-App
-npm install
+yarn install
 ```
 
 3. Start the application :
 ```
-npm start
+yarn start
 ```
 
 4. Start Playing : Select a user to login and start playing the game.
