@@ -18,15 +18,6 @@ export default function users(state = {}, action) {
                 }
             }
         }
-        case ADD_USER_QUESTION: {
-            return {
-                ...state,
-                [action.userID]: {
-                    ...state[action.userID],
-                    questions: state[action.userID].questions.concat([action.questionID])
-                }
-            }
-        }
         case SAVE_USER_ANSWER: {
             return {
                 ...state,

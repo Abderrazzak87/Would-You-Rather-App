@@ -1,48 +1,58 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { signInUser } from '../actions/authedUser'
+import { Redirect, withRouter } from 'react-router-dom'
 
 class Login extends Component {
 
     state = {
-        userId: ''
+        userId: '',
+        redirectToReferrer: false
     }
 
     handleChange = (e) => {
         this.setState({ userId: e.target.value })
+
     }
 
-    handleSubmit = (e) => {
+    handleSubmit = function(e) {
         e.preventDefault()
 
         const { dispatch } = this.props
         const { userId } = this.state
+        dispatch(signInUser(userId))
 
-        if (userId !== '') {
+        this.setState(function(previousState) {
+            return {
+              ...previousState,
+              redirectToReferrer: true,
+            }
+          })
 
-            dispatch(signInUser(userId))
-        }
-
-        else
-            alert('Please selcet a user')
 
     }
 
 
     render() {
 
-        const { users, authedUser } = this.props
-        const { userId } = this.state
+        const { from } = this.props.location.state || { from: { pathname: '/dashboard' } }
+        const { redirectToReferrer, userId } = this.state
+
+        console.log(from, redirectToReferrer, userId)
+
+        if (redirectToReferrer) {
+            return <Redirect to={from} />
+        }
+
+        const { users } = this.props
         const name = (userId !== '') ? users[userId].name : ''
         const avatarURL = (userId !== '') ? users[userId].avatarURL : 'http://www.masscue.org/wp-content/uploads/2017/03/male-no-image.jpg'
-        console.log('Hello ', authedUser)
-
 
         return (
             
             <div className="container-login100">
                 <div className="wrap-login100 p-t-85 p-b-20">
-                    <form className='login100-form' onSubmit={this.handleSubmit}>
+                    <form className='login100-form' onSubmit={event => this.handleSubmit(event)}>
                         <span className="login100-form-title p-b-70">
                             Welcom to the Would You Rather App
 					    </span>
@@ -86,4 +96,4 @@ function mapStateToProps({ users, authedUser }) {
 
 }
 
-export default connect(mapStateToProps)(Login)
+export default withRouter(connect(mapStateToProps)(Login))

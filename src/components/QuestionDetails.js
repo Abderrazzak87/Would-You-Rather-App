@@ -5,6 +5,7 @@ import ProgressBar from './ProgressBar'
 import NavigationBar from './NavigationBar'
 import { formatDate } from '../utils/helpers'
 import { handleSaveQuestionAnswer } from '../actions/shared'
+import { Redirect, withRouter } from 'react-router-dom'
 
 class QuestionDetails extends Component {
 
@@ -32,13 +33,19 @@ class QuestionDetails extends Component {
 
     render() {
 
-        const { optionOne, optionTwo, isOneAnswered, isTwoAnswered, question, authorName, authorAvatar, timestamp } = this.props
+        const { question } = this.props
+
+        if (!question)   {
+            console.log('question does not exists')
+            return <Redirect to="/notfound" />
+        }
+
+        const { optionOne, optionTwo, isOneAnswered, isTwoAnswered, authorName, authorAvatar, timestamp } = this.props
         const optionOneVotesNumber = question.optionOne.votes.length
         const optionTwoVotesNumber = question.optionTwo.votes.length
         const totalVotes = optionOneVotesNumber + optionTwoVotesNumber
         const optionOnePercentage = (optionOneVotesNumber / totalVotes * 100).toFixed(0)
         const optionTwoPercentage = (optionTwoVotesNumber / totalVotes * 100).toFixed(0)
-
 
         return (
             <Fragment>
@@ -127,8 +134,11 @@ class QuestionDetails extends Component {
 
 function mapStateToProps({ authedUser, questions, users }, props) {
     const { question_id } = props.match.params
-    //const question_id = '8xf0y6ziyjabvozdd253nd'
+
     const question = questions[question_id]
+    if (!question)
+        return question 
+
     const authorAvatar = users[question.author].avatarURL
     const authorName = users[question.author].name
     const timestamp = formatDate(question.timestamp)
@@ -154,4 +164,4 @@ function mapStateToProps({ authedUser, questions, users }, props) {
     }
 }
 
-export default connect(mapStateToProps)(QuestionDetails)
+export default withRouter(connect(mapStateToProps)(QuestionDetails))

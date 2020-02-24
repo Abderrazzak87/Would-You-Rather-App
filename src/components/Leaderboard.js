@@ -13,7 +13,7 @@ class Leaderboard extends Component {
                 <NavigationBar />
                 <h1 className="h1">Would You Rather Leaderboard</h1>
                 <div className="tbl-header">
-                    <table cellpadding="0" cellspacing="0" border="0">
+                    <table border="0">
                         <thead>
                             <tr>
                                 <th>Rank</th>
@@ -26,7 +26,7 @@ class Leaderboard extends Component {
                     </table>
                 </div>
                 <div className="tbl-content">
-                    <table cellpadding="0" cellspacing="0" border="0">
+                    <table border="0">
                         <tbody>
                             {
                                 data.map((user, index) => (

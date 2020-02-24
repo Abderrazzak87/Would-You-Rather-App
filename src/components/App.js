@@ -8,7 +8,8 @@ import NewQuestion from './NewQuestion'
 import Dashboard from './Dashboard'
 import QuestionDetails from './QuestionDetails'
 import Leaderboard from './Leaderboard'
-import PageError from './PageError'
+import NotFoundPage from './NotFoundPage'
+import ProtectedRoute from './ProtectedRoute'
 
 
 class App extends Component {
@@ -25,19 +26,13 @@ class App extends Component {
       <Router>
         <Fragment>
           <LoadingBar />
-         
           <Switch>
-            {
-              this.props.authedUser === null
-                ? <Route path='/' exact component={Login} />
-                : <Fragment>
-                  <Route path='/' exact component={Dashboard} />
-                  <Route path='/questions/:question_id' component={QuestionDetails} />
-                  <Route path='/add' exact component={NewQuestion} />
-                  <Route path='/leaderboard' exact component={Leaderboard} />
-                </Fragment>
-            }
-             <Route component={PageError} />
+            <Route path="/" exact component={Login} />
+            <ProtectedRoute path='/dashboard' exact component={Dashboard} />
+            <ProtectedRoute path='/questions/:question_id' component={QuestionDetails} />
+            <ProtectedRoute path='/add' exact component={NewQuestion} />
+            <ProtectedRoute path='/leaderboard' exact component={Leaderboard} />
+            <Route path="/notfound" component={NotFoundPage} />
           </Switch>
         </Fragment>
       </Router>
